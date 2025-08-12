@@ -93,7 +93,7 @@ public final class Constants {
     public static final String MSG_MEMBER_NOT_FOUND_UPDATE = "Member not found: %s for update, skipping...";
     public static final String MSG_MEMBERS_LOADED = "Loaded %d members from %s";
     public static final String MSG_MEMBERS_SAVED = "Saved %d members to %s";
-    public static final String MSG_EXIT_MESSAGE = "Thank you for using Member Management System!";
+    public static final String MSG_EXIT_MESSAGE = "Thank you for using Member Management System!\n========================================\nThis program is developed for ICT711 group project.\nThe group members are: \n -Muhammad Eman Ejaz - 20034038 \n -Sajina Rana - 2005243 \n -Waqas Iqbal - 2005647 \n -Sravanth Rao - 2003358 \n========================================\nSee you next time!";
     public static final String MSG_INVALID_OPTION = "Invalid option. Please try again.";
     public static final String MSG_INVALID_INPUT = "Invalid input. Please enter a number.";
     public static final String MSG_ERROR_OCCURRED = "An error occurred: %s";
