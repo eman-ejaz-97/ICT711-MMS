@@ -9,26 +9,56 @@ import models.*;
 import constants.Constants;
 
 /**
- * Manager class for handling member operations
- * Demonstrates use of Java Collections and File I/O
+ * Central manager class for all member-related operations.
+ * 
+ * Provides comprehensive functionality for:
+ * - Member CRUD operations (Create, Read, Update, Delete)
+ * - File I/O operations for data persistence
+ * - Performance management and reporting
+ * - Statistical analysis and reporting
+ * 
+ * Demonstrates:
+ * - Java Collections (ArrayList, Streams)
+ * - File I/O with CSV format
+ * - Exception handling
+ * - Business logic implementation
+ * 
+ * @author ICT711 Group Project Team
+ * @version 1.0
  */
 public class MemberManager {
-    private ArrayList<Member> members; // using ArrayList for dynamic storage for members
+    /** Dynamic storage for all gym members */
+    private ArrayList<Member> members;
+    
+    /** Currently loaded/default file name for persistence */
     private String currentFileName;
     
+    /**
+     * Constructs a new MemberManager with empty member list.
+     * Sets default file name for data persistence.
+     */
     public MemberManager() {
         this.members = new ArrayList<>();
         this.currentFileName = Constants.DEFAULT_FILE_NAME;
     }
     
-    // add member to the system
+    /**
+     * Adds a new member to the management system.
+     * 
+     * @param member the member object to add (cannot be null)
+     */
     public void addMember(Member member) {
         members.add(member);
         System.out.printf(Constants.MSG_MEMBER_ADDED, member.getFullName(), member.getMemberId());
         System.out.println();
     }
     
-    // remove member by ID
+    /**
+     * Removes a member from the system by ID.
+     * 
+     * @param memberId unique identifier of member to remove
+     * @return true if member was found and removed, false otherwise
+     */
     public boolean removeMember(String memberId) {
         boolean removed = members.removeIf(m -> m.getMemberId().equals(memberId));
         if (removed) {
@@ -41,7 +71,12 @@ public class MemberManager {
         return removed;
     }
     
-    // find member by ID
+    /**
+     * Finds a member by their unique ID.
+     * 
+     * @param memberId unique identifier to search for
+     * @return Member object if found, null otherwise
+     */
     public Member findMemberById(String memberId) {
         System.out.printf(Constants.MSG_LOADING_MEMBERS, memberId);
         System.out.println();
@@ -51,7 +86,12 @@ public class MemberManager {
                 .orElse(null);
     }
     
-    // find members by name (partial match)
+    /**
+     * Finds members by partial name match (case-insensitive).
+     * 
+     * @param name partial name to search for
+     * @return list of members matching the search criteria
+     */
     public List<Member> findMembersByName(String name) {
         System.out.printf(Constants.MSG_FINDING_BY_NAME, name);
         System.out.println();
@@ -61,7 +101,13 @@ public class MemberManager {
                 .collect(Collectors.toList());
     }
     
-    // find members by performance rating
+    /**
+     * Finds members with performance rating above specified threshold.
+     * Results are sorted by performance rating (highest first).
+     * 
+     * @param minRating minimum performance rating to include
+     * @return list of members meeting performance criteria, sorted by rating
+     */
     public List<Member> findMembersByPerformance(int minRating) {
         return members.stream()
                 .filter(m -> m.getPerformanceRating() >= minRating)
@@ -69,7 +115,13 @@ public class MemberManager {
                 .collect(Collectors.toList());
     }
     
-    // update member information
+    /**
+     * Updates member information based on provided field map.
+     * 
+     * @param memberId unique identifier of member to update
+     * @param updates map containing field names and new values
+     * @return true if member was found and updated, false otherwise
+     */
     public boolean updateMember(String memberId, Map<String, Object> updates) {
         System.out.printf(Constants.MSG_UPDATING_MEMBER, memberId);
         System.out.println();
@@ -80,7 +132,7 @@ public class MemberManager {
             return false;
         }
         
-        // update fields based on the map
+        // Update fields based on provided map
         if (updates.containsKey(Constants.UPDATE_KEY_EMAIL)) {
             member.setEmail((String) updates.get(Constants.UPDATE_KEY_EMAIL));
         }
@@ -100,7 +152,15 @@ public class MemberManager {
         return true;
     }
     
-    // load members from CSV file
+    /**
+     * Loads member data from CSV file into the system.
+     * Clears existing members and replaces with file content.
+     * 
+     * Expected CSV format: Type,ID,FirstName,LastName,Email,Phone,PerformanceRating,GoalAchieved,Extra1,Extra2
+     * 
+     * @param fileName path to CSV file to load
+     * @throws IOException if file cannot be read or has invalid format
+     */
     public void loadFromFile(String fileName) throws IOException {
         // clear the members list
         members.clear();
@@ -154,7 +214,12 @@ public class MemberManager {
         }
     }
     
-    // Save members to CSV file
+    /**
+     * Saves all current members to CSV file.
+     * 
+     * @param fileName path where to save the CSV file
+     * @throws IOException if file cannot be written
+     */
     public void saveToFile(String fileName) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             writer.println(Constants.CSV_HEADER);
@@ -183,7 +248,13 @@ public class MemberManager {
         }
     }
     
-    // Generate appreciation letter for high performers
+    /**
+     * Generates appreciation letter for high-performing members.
+     * Only generates letters for members with rating ≥ 8.
+     * 
+     * @param member the member to generate letter for
+     * @return formatted appreciation letter or null if not eligible
+     */
     public String generateAppreciationLetter(Member member) {
         if (member.getPerformanceRating() >= Constants.HIGH_PERFORMANCE_THRESHOLD) {
             return String.format(Constants.APPRECIATION_LETTER_TEMPLATE,
@@ -192,7 +263,13 @@ public class MemberManager {
         return null;
     }
     
-    // Generate reminder letter for low performers
+    /**
+     * Generates reminder letter for low-performing members.
+     * Only generates letters for members with rating < 5.
+     * 
+     * @param member the member to generate letter for
+     * @return formatted reminder letter or null if not applicable
+     */
     public String generateReminderLetter(Member member) {
         if (member.getPerformanceRating() < Constants.LOW_PERFORMANCE_THRESHOLD) {
             return String.format(Constants.REMINDER_LETTER_TEMPLATE,
@@ -201,18 +278,26 @@ public class MemberManager {
         return null;
     }
     
-    // Get all members
+    /**
+     * Returns a copy of all members in the system.
+     * 
+     * @return new ArrayList containing all current members
+     */
     public List<Member> getAllMembers() {
         return new ArrayList<>(members);
     }
     
-    // Get statistics
+    /**
+     * Displays comprehensive statistics about all members.
+     * Includes counts by type, average performance, and goal achievement rates.
+     */
     public void displayStatistics() {
         if (members.isEmpty()) {
             System.out.println(Constants.STATS_NO_MEMBERS);
             return;
         }
         
+        // Calculate statistics using streams
         long regularCount = members.stream().filter(m -> m instanceof RegularMember).count();
         long premiumCount = members.stream().filter(m -> m instanceof PremiumMember).count();
         long studentCount = members.stream().filter(m -> m instanceof StudentMember).count();
@@ -224,6 +309,7 @@ public class MemberManager {
         
         long goalAchievers = members.stream().filter(Member::isGoalAchieved).count();
         
+        // Display formatted statistics
         System.out.println(Constants.STATS_TITLE);
         System.out.printf(Constants.STATS_TOTAL_MEMBERS, members.size());
         System.out.println();

@@ -8,50 +8,57 @@ import models.*;
 import constants.Constants;
 
 /**
- * Main class with text-based user interface
- * Demonstrates exception handling and user interaction
+ * Main user interface class providing text-based interaction.
+ * 
+ * Provides a comprehensive menu-driven interface for:
+ * - Loading and saving member data
+ * - Adding, updating, and deleting members
+ * - Querying and viewing member information
+ * - Managing performance and generating reports
+ * - Displaying system statistics
+ * 
+ * Demonstrates:
+ * - Exception handling for user input and file operations
+ * - Input validation and user interaction patterns
+ * - Integration with business logic layer (MemberManager)
+ * 
+ * @author ICT711 Group Project Team
+ * @version 1.0
  */
 public class MemberManagementSystem {
+    /** Central manager for all member operations */
     private static MemberManager manager = new MemberManager();
+    
+    /** Scanner for reading user input */
     private static Scanner scanner = new Scanner(System.in);
     
+    /**
+     * Application entry point.
+     * Initializes default data file and starts the main application loop.
+     * 
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
-        // Create initial data file if it doesn't exist
+        // Create initial data file with sample members if it doesn't exist
         createInitialDataFile();
         
         boolean running = true;
         
+        // Main application loop
         while (running) {
-            // display the text based ui menu
             displayMenu();
             
             try {
-                // get the user's choice
                 int choice = Integer.parseInt(scanner.nextLine());
                 
-                // switch case to handle the user's choice
                 switch (choice) {
-                    case 1:
-                        loadRecords();
-                        break;
-                    case 2:
-                        addNewMember();
-                        break;
-                    case 3:
-                        updateMember();
-                        break;
-                    case 4:
-                        deleteMember();
-                        break;
-                    case 5:
-                        queryMembers();
-                        break;
-                    case 6:
-                        managePerformance();
-                        break;
-                    case 7:
-                        manager.displayStatistics();
-                        break;
+                    case 1: loadRecords(); break;
+                    case 2: addNewMember(); break;
+                    case 3: updateMember(); break;
+                    case 4: deleteMember(); break;
+                    case 5: queryMembers(); break;
+                    case 6: managePerformance(); break;
+                    case 7: manager.displayStatistics(); break;
                     case 8:
                         running = false;
                         System.out.println(Constants.MSG_EXIT_MESSAGE);
@@ -71,6 +78,9 @@ public class MemberManagementSystem {
         scanner.close();
     }
     
+    /**
+     * Displays the main menu options to the user.
+     */
     private static void displayMenu() {
         System.out.println("\n" + Constants.MENU_TITLE);
         System.out.println(Constants.MENU_LOAD_RECORDS);
@@ -84,6 +94,10 @@ public class MemberManagementSystem {
         System.out.print(Constants.MENU_PROMPT);
     }
     
+    /**
+     * Handles loading member records from a CSV file.
+     * Prompts user for filename or uses default.
+     */
     private static void loadRecords() {
         System.out.print("Enter filename to load (or press Enter for default '" + Constants.DEFAULT_FILE_NAME + "'): ");
         String fileName = scanner.nextLine();
@@ -101,6 +115,10 @@ public class MemberManagementSystem {
         }
     }
     
+    /**
+     * Handles adding a new member to the system.
+     * Provides member type selection and collects required information.
+     */
     private static void addNewMember() {
         System.out.println("\n=== Add New Member ===");
         System.out.println("1. Regular Member");
@@ -111,6 +129,7 @@ public class MemberManagementSystem {
         try {
             int type = Integer.parseInt(scanner.nextLine());
             
+            // Collect common member information
             System.out.print("Enter Member ID: ");
             String id = scanner.nextLine();
             
@@ -128,6 +147,7 @@ public class MemberManagementSystem {
             
             Member newMember = null;
             
+            // Create member based on selected type
             switch (type) {
                 case 1:
                     System.out.println("- Regular Member will get 10% discount if goal achieved -");
@@ -170,6 +190,10 @@ public class MemberManagementSystem {
         }
     }
     
+    /**
+     * Handles updating an existing member's information.
+     * Prompts user for member ID and then for specific fields to update.
+     */
     private static void updateMember() {
         System.out.print("Enter Member ID to update: ");
         String id = scanner.nextLine();
@@ -220,6 +244,10 @@ public class MemberManagementSystem {
         }
     }
     
+    /**
+     * Handles deleting a member from the system.
+     * Prompts user for member ID and confirms deletion.
+     */
     private static void deleteMember() {
         System.out.print("Enter Member ID to delete: ");
         String id = scanner.nextLine();
@@ -247,6 +275,10 @@ public class MemberManagementSystem {
         }
     }
     
+    /**
+     * Handles querying member information.
+     * Provides options for querying by ID, name, performance rating, or showing all.
+     */
     private static void queryMembers() {
         System.out.println("\n=== Query Members ===");
         System.out.println("1. Query by ID");
@@ -313,6 +345,10 @@ public class MemberManagementSystem {
         }
     }
     
+    /**
+     * Handles managing performance and generating reports.
+     * Provides options for generating appreciation/reminder letters and viewing fee details.
+     */
     private static void managePerformance() {
         System.out.println("\n=== Performance Management ===");
         System.out.println("1. Generate appreciation letters");
@@ -364,6 +400,10 @@ public class MemberManagementSystem {
         }
     }
     
+    /**
+     * Handles saving all current members to a CSV file.
+     * Prompts user for filename or uses default.
+     */
     private static void saveToFile() {
         System.out.print("Enter filename to save (or press Enter for '" + Constants.DEFAULT_FILE_NAME + "'): ");
         String fileName = scanner.nextLine();
@@ -378,13 +418,17 @@ public class MemberManagementSystem {
         }
     }
 
+    /**
+     * Creates initial CSV data file with sample members if file doesn't exist.
+     * Provides 10 sample members across all membership types for testing.
+     */
     private static void createInitialDataFile() {
         File file = new File(Constants.DEFAULT_FILE_NAME);
         if (!file.exists()) {
             try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
                 writer.println(Constants.CSV_HEADER);
                 
-                // add 10 initial members (static data)
+                // Add 10 initial sample members
                 writer.println("Regular,M001,Eman,Ejaz,eman.ejaz@email.com,466-0101,7,true,,");
                 writer.println("Premium,M002,Sajina,Rana,sajina.rana@email.com,466-0102,9,true,Elina Trainer,8");
                 writer.println("Student,M003,Waqas,Iqbal,waqas.iqbal@email.com,466-0103,6,false,STU2024001,State University");

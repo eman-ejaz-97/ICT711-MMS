@@ -3,14 +3,34 @@ package models;
 import constants.Constants;
 
 /**
- * Premium member with personal trainer
- * Demonstrates inheritance and polymorphism (Base class: Member)
+ * Premium gym member with personal trainer and enhanced benefits.
+ * 
+ * Extends Member base class to provide specific implementation for:
+ * - Personal training sessions with associated costs
+ * - Goal achievement discount (15%)
+ * - High performance bonus for ratings 8 and above
+ * 
+ * Demonstrates inheritance and polymorphism from Member base class.
+ * 
+ * @author ICT711 Group Project Team
+ * @version 1.0
  */
 public class PremiumMember extends Member {
-    // additional fields for premium members
-    private String trainerName;
-    private int sessionsPerMonth;
+    private String trainerName;      // Assigned personal trainer
+    private int sessionsPerMonth;    // Number of training sessions per month
     
+    /**
+     * Constructs a new PremiumMember with specified details.
+     * Automatically sets the base fee to the premium member rate.
+     * 
+     * @param memberId unique identifier for the member
+     * @param firstName member's first name
+     * @param lastName member's last name
+     * @param email member's email address
+     * @param phone member's phone number
+     * @param trainerName assigned personal trainer's name
+     * @param sessionsPerMonth number of training sessions per month
+     */
     public PremiumMember(String memberId, String firstName, String lastName,
                         String email, String phone, String trainerName, int sessionsPerMonth) {
         super(memberId, firstName, lastName, email, phone, Constants.PREMIUM_BASE_FEE);
@@ -18,19 +38,30 @@ public class PremiumMember extends Member {
         this.sessionsPerMonth = sessionsPerMonth;
     }
     
+    /**
+     * Calculates monthly fee for premium members.
+     * 
+     * Fee calculation includes:
+     * - Base fee for premium membership
+     * - Cost for personal training sessions
+     * - 15% discount if goal achieved
+     * - $20 bonus discount for high performance (rating ≥ 8)
+     * 
+     * @return calculated monthly fee
+     */
     @Override
     public double calculateMonthlyFee() {
         double fee = getBaseFee();
         
-        // add cost for personal training sessions
+        // Add cost for personal training sessions
         fee += (sessionsPerMonth * Constants.SESSION_COST);
         
-        // apply discount if goal achieved
+        // Apply goal achievement discount
         if (isGoalAchieved()) {
             fee = fee * (1 - Constants.PREMIUM_GOAL_ACHIEVEMENT_DISCOUNT);
         }
         
-        // premium members get bonus for high performance
+        // Apply high performance bonus
         if (getPerformanceRating() >= Constants.HIGH_PERFORMANCE_THRESHOLD) {
             fee -= Constants.HIGH_PERFORMANCE_BONUS;
         }
@@ -38,15 +69,25 @@ public class PremiumMember extends Member {
         return fee;
     }
     
+    /**
+     * Returns the display name for premium membership.
+     * 
+     * @return "Premium Membership (Personal Trainer)"
+     */
     @Override
     public String getMemberType() {
         return Constants.DISPLAY_PREMIUM_MEMBERSHIP;
     }
     
-    // getters and setters for additional fields for premium members (encapsulation)
+    /** @return assigned trainer's name */
     public String getTrainerName() { return trainerName; }
+    
+    /** @param trainerName new trainer name to assign */
     public void setTrainerName(String trainerName) { this.trainerName = trainerName; }
     
+    /** @return number of training sessions per month */
     public int getSessionsPerMonth() { return sessionsPerMonth; }
+    
+    /** @param sessionsPerMonth new number of sessions to set */
     public void setSessionsPerMonth(int sessionsPerMonth) { this.sessionsPerMonth = sessionsPerMonth; }
 }
