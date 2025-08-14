@@ -1,6 +1,5 @@
 package models;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import constants.Constants;
 
@@ -19,9 +18,8 @@ import constants.Constants;
  * @author ICT711 Group Project Team
  * @version 1.0
  */
-public abstract class Member implements Serializable {
+public abstract class Member {
     /** Serial version UID for object serialization compatibility */
-    private static final long serialVersionUID = 1L;
     
     // Encapsulated member attributes
     private String memberId;        // Unique identifier for the member

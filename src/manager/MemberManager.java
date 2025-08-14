@@ -211,6 +211,10 @@ public class MemberManager {
             }
             System.out.printf(Constants.MSG_MEMBERS_LOADED, members.size(), fileName);
             System.out.println();
+        } catch (IOException e) {
+            System.out.printf(Constants.MSG_ERROR_OCCURRED, e.getMessage());
+            System.out.println();
+            e.printStackTrace();
         }
     }
     
