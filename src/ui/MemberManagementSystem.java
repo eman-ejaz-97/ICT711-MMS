@@ -22,8 +22,6 @@ import constants.Constants;
  * - Input validation and user interaction patterns
  * - Integration with business logic layer (MemberManager)
  * 
- * @author ICT711 Group Project Team
- * @version 1.0
  */
 public class MemberManagementSystem {
     /** Central manager for all member operations */
@@ -147,7 +145,7 @@ public class MemberManagementSystem {
             
             Member newMember = null;
             
-            // Create member based on selected type
+            // POLYMORPHISM: Create different subclass objects based on user choice, treating them as Member type
             switch (type) {
                 case 1:
                     System.out.println("- Regular Member will get 10% discount if goal achieved -");
@@ -296,8 +294,8 @@ public class MemberManagementSystem {
                     String id = scanner.nextLine();
                     Member member = manager.findMemberById(id);
                     if (member != null) {
-                        System.out.println("\n" + member);
-                        System.out.println(member.generatePerformanceReport());
+                        System.out.println("\n" + member); // POLYMORPHISM: toString() calls subclass implementations
+                        System.out.println(member.generatePerformanceReport()); // POLYMORPHISM: Calls subclass implementations of calculateMonthlyFee() and getMemberType()
                     } else {
                         System.out.println("Member not found.");
                     }
@@ -309,7 +307,7 @@ public class MemberManagementSystem {
                     List<Member> byName = manager.findMembersByName(name);
                     if (!byName.isEmpty()) {
                         System.out.println("\nFound " + byName.size() + " member(s):");
-                        byName.forEach(System.out::println);
+                        byName.forEach(System.out::println); // POLYMORPHISM: Each member's toString() calls appropriate subclass implementation
                     } else {
                         System.out.println("No members found with that name.");
                     }
@@ -321,7 +319,7 @@ public class MemberManagementSystem {
                     List<Member> byPerformance = manager.findMembersByPerformance(minRating);
                     if (!byPerformance.isEmpty()) {
                         System.out.println("\nFound " + byPerformance.size() + " member(s):");
-                        byPerformance.forEach(System.out::println);
+                        byPerformance.forEach(System.out::println); // POLYMORPHISM: Each member's toString() calls appropriate subclass implementation
                     } else {
                         System.out.println("No members found with that performance rating.");
                     }
@@ -331,7 +329,7 @@ public class MemberManagementSystem {
                     List<Member> allMembers = manager.getAllMembers();
                     if (!allMembers.isEmpty()) {
                         System.out.println("\nAll Members (" + allMembers.size() + " total):");
-                        allMembers.forEach(System.out::println);
+                        allMembers.forEach(System.out::println); // POLYMORPHISM: Each member's toString() calls appropriate subclass implementation
                     } else {
                         System.out.println("No members in the system.");
                     }
@@ -383,8 +381,8 @@ public class MemberManagementSystem {
                 case 3:
                     System.out.println("\n=== Monthly Fee Details ===");
                     double totalFees = 0;
-                    for (Member member : manager.getAllMembers()) {
-                        double fee = member.calculateMonthlyFee();
+                    for (Member member : manager.getAllMembers()) { // POLYMORPHISM: Iterate through different member types
+                        double fee = member.calculateMonthlyFee(); // POLYMORPHISM: Calls subclass-specific fee calculation
                         totalFees += fee;
                         System.out.printf("%s - %s: $%.2f%n", 
                             member.getMemberId(), member.getFullName(), fee);

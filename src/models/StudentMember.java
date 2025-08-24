@@ -12,11 +12,11 @@ import constants.Constants;
  * - No performance penalties
  * 
  * Demonstrates inheritance and polymorphism from Member base class.
- * 
- * @author ICT711 Group Project Team
- * @version 1.0
+ *
+
  */
-public class StudentMember extends Member {
+public class StudentMember extends Member { // INHERITANCE: Extends Member base class
+    // ENCAPSULATION: Additional private fields specific to student members
     private String studentId;    // Student's academic ID
     private String university;   // Student's educational institution
     
@@ -34,7 +34,7 @@ public class StudentMember extends Member {
      */
     public StudentMember(String memberId, String firstName, String lastName,
                         String email, String phone, String studentId, String university) {
-        super(memberId, firstName, lastName, email, phone, Constants.STUDENT_BASE_FEE);
+        super(memberId, firstName, lastName, email, phone, Constants.STUDENT_BASE_FEE); // INHERITANCE: Call parent constructor
         this.studentId = studentId;
         this.university = university;
     }
@@ -50,12 +50,12 @@ public class StudentMember extends Member {
      * 
      * @return calculated monthly fee (minimum $20)
      */
-    @Override
+    @Override // POLYMORPHISM: Override abstract method from parent class
     public double calculateMonthlyFee() {
-        double fee = getBaseFee() * (1 - Constants.STUDENT_BASE_DISCOUNT);
+        double fee = getBaseFee() * (1 - Constants.STUDENT_BASE_DISCOUNT); // INHERITANCE: Use method inherited from parent class
         
         // Additional discount for goal achievement
-        if (isGoalAchieved()) {
+        if (isGoalAchieved()) { // INHERITANCE: Use method inherited from parent class
             fee -= Constants.STUDENT_GOAL_ACHIEVEMENT_BONUS;
         }
         
@@ -68,13 +68,13 @@ public class StudentMember extends Member {
      * 
      * @return "Student Membership"
      */
-    @Override
+    @Override // POLYMORPHISM: Override abstract method from parent class
     public String getMemberType() {
         return Constants.DISPLAY_STUDENT_MEMBERSHIP;
     }
     
     /** @return student's academic ID */
-    public String getStudentId() { return studentId; }
+    public String getStudentId() { return studentId; } // ENCAPSULATION: Controlled access to private field
     
     /** @param studentId new student ID to set */
     public void setStudentId(String studentId) { this.studentId = studentId; }

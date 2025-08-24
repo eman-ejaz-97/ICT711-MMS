@@ -15,13 +15,12 @@ import constants.Constants;
  * - Encapsulation: Private fields with controlled access via getters/setters
  * - Inheritance: Base class for RegularMember, PremiumMember, StudentMember
  * 
- * @author ICT711 Group Project Team
- * @version 1.0
+
  */
-public abstract class Member {
+public abstract class Member { // ABSTRACTION: Abstract class cannot be instantiated directly
     /** Serial version UID for object serialization compatibility */
     
-    // Encapsulated member attributes
+    // ENCAPSULATION: Private fields hide internal data from external access
     private String memberId;        // Unique identifier for the member
     private String firstName;       // Member's first name
     private String lastName;        // Member's last name
@@ -61,7 +60,7 @@ public abstract class Member {
      * 
      * @return calculated monthly fee amount
      */
-    public abstract double calculateMonthlyFee();
+    public abstract double calculateMonthlyFee(); // ABSTRACTION: Abstract method forces subclasses to provide implementation
     
     /**
      * Returns the display name for this member's type.
@@ -69,7 +68,7 @@ public abstract class Member {
      * 
      * @return string representation of member type
      */
-    public abstract String getMemberType();
+    public abstract String getMemberType(); // ABSTRACTION: Abstract method forces subclasses to provide implementation
     
     /**
      * Generates a comprehensive performance report for this member.
@@ -79,17 +78,17 @@ public abstract class Member {
     public String generatePerformanceReport() {
         StringBuilder report = new StringBuilder();
         report.append("Performance Report for ").append(getFullName()).append("\n");
-        report.append("Member Type: ").append(getMemberType()).append("\n");
+        report.append("Member Type: ").append(getMemberType()).append("\n"); // POLYMORPHISM: Calls subclass implementation
         report.append("Performance Rating: ").append(performanceRating).append("/10\n");
         report.append("Goal Achievement: ").append(goalAchieved ? "Yes" : "No").append("\n");
-        report.append("Monthly Fee: $").append(String.format("%.2f", calculateMonthlyFee())).append("\n");
+        report.append("Monthly Fee: $").append(String.format("%.2f", calculateMonthlyFee())).append("\n"); // POLYMORPHISM: Calls subclass implementation
         return report.toString();
     }
     
     // Getter and setter methods with validation where appropriate
     
     /** @return member's unique identifier */
-    public String getMemberId() { return memberId; }
+    public String getMemberId() { return memberId; } // ENCAPSULATION: Controlled access to private field
     
     /** @param memberId new member ID to set */
     public void setMemberId(String memberId) { this.memberId = memberId; }
@@ -142,7 +141,7 @@ public abstract class Member {
      * 
      * @param performanceRating new rating to set (0-10)
      */
-    public void setPerformanceRating(int performanceRating) {
+    public void setPerformanceRating(int performanceRating) { // ENCAPSULATION: Controlled modification with validation
         if (performanceRating >= Constants.MIN_PERFORMANCE_RATING && 
             performanceRating <= Constants.MAX_PERFORMANCE_RATING) {
             this.performanceRating = performanceRating;
@@ -163,6 +162,6 @@ public abstract class Member {
     @Override
     public String toString() {
         return String.format("Member ID: %s | Name: %s | Type: %s | Rating: %d/10 | Fee: $%.2f",
-                memberId, getFullName(), getMemberType(), performanceRating, calculateMonthlyFee());
+                memberId, getFullName(), getMemberType(), performanceRating, calculateMonthlyFee()); // POLYMORPHISM: getMemberType() and calculateMonthlyFee() call subclass implementations
     }
 }

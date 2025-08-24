@@ -23,8 +23,6 @@ import constants.Constants;
  * - Exception handling
  * - Business logic implementation
  * 
- * @author ICT711 Group Project Team
- * @version 1.0
  */
 public class MemberManager {
     /** Dynamic storage for all gym members */
@@ -186,6 +184,7 @@ public class MemberManager {
                     
                     Member member = null;
                     
+                    // POLYMORPHISM: Creating different subclass objects but treating them as Member type
                     switch (type) {
                         case Constants.MEMBER_TYPE_REGULAR:
                             member = new RegularMember(id, firstName, lastName, email, phone);
@@ -228,8 +227,8 @@ public class MemberManager {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             writer.println(Constants.CSV_HEADER);
             
-            for (Member member : members) {
-                writer.print(member.getMemberType().split(" ")[0] + Constants.CSV_DELIMITER);
+            for (Member member : members) { // POLYMORPHISM: Iterate through different member types using common interface
+                writer.print(member.getMemberType().split(" ")[0] + Constants.CSV_DELIMITER); // POLYMORPHISM: Calls subclass implementation
                 writer.print(member.getMemberId() + Constants.CSV_DELIMITER);
                 writer.print(member.getFirstName() + Constants.CSV_DELIMITER);
                 writer.print(member.getLastName() + Constants.CSV_DELIMITER);
@@ -238,6 +237,7 @@ public class MemberManager {
                 writer.print(member.getPerformanceRating() + Constants.CSV_DELIMITER);
                 writer.print(member.isGoalAchieved());
                 
+                // POLYMORPHISM: Runtime type checking and casting to access subclass-specific features
                 if (member instanceof PremiumMember) {
                     PremiumMember pm = (PremiumMember) member;
                     writer.print(Constants.CSV_DELIMITER + pm.getTrainerName() + Constants.CSV_DELIMITER + pm.getSessionsPerMonth());
@@ -302,6 +302,7 @@ public class MemberManager {
         }
         
         // Calculate statistics using streams
+        // POLYMORPHISM: Runtime type checking to categorize different member types
         long regularCount = members.stream().filter(m -> m instanceof RegularMember).count();
         long premiumCount = members.stream().filter(m -> m instanceof PremiumMember).count();
         long studentCount = members.stream().filter(m -> m instanceof StudentMember).count();

@@ -10,11 +10,10 @@ import constants.Constants;
  * - Low performance penalty for ratings below 3
  * 
  * Demonstrates inheritance and polymorphism from Member base class.
- * 
- * @author ICT711 Group Project Team
- * @version 1.0
+ *
+
  */
-public class RegularMember extends Member {
+public class RegularMember extends Member { // INHERITANCE: Extends Member base class
     
     /**
      * Constructs a new RegularMember with specified details.
@@ -28,7 +27,7 @@ public class RegularMember extends Member {
      */
     public RegularMember(String memberId, String firstName, String lastName,
                         String email, String phone) {
-        super(memberId, firstName, lastName, email, phone, Constants.REGULAR_BASE_FEE);
+        super(memberId, firstName, lastName, email, phone, Constants.REGULAR_BASE_FEE); // INHERITANCE: Call parent constructor
     }
     
     /**
@@ -41,17 +40,17 @@ public class RegularMember extends Member {
      * 
      * @return calculated monthly fee
      */
-    @Override
+    @Override // POLYMORPHISM: Override abstract method from parent class
     public double calculateMonthlyFee() {
-        double fee = getBaseFee();
+        double fee = getBaseFee(); // INHERITANCE: Use method inherited from parent class
         
         // Apply goal achievement discount
-        if (isGoalAchieved()) {
+        if (isGoalAchieved()) { // INHERITANCE: Use method inherited from parent class
             fee = fee * (1 - Constants.REGULAR_GOAL_ACHIEVEMENT_DISCOUNT);
         }
         
         // Apply penalty for low performance
-        if (getPerformanceRating() < Constants.PENALTY_PERFORMANCE_THRESHOLD) {
+        if (getPerformanceRating() < Constants.PENALTY_PERFORMANCE_THRESHOLD) { // INHERITANCE: Use method inherited from parent class
             fee += Constants.LOW_PERFORMANCE_PENALTY;
         }
         
@@ -63,7 +62,7 @@ public class RegularMember extends Member {
      * 
      * @return "Regular Membership"
      */
-    @Override
+    @Override // POLYMORPHISM: Override abstract method from parent class
     public String getMemberType() {
         return Constants.DISPLAY_REGULAR_MEMBERSHIP;
     }

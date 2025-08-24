@@ -7,8 +7,7 @@ package constants;
  * and configurability. Prevents magic numbers and duplicate string literals
  * throughout the codebase.
  * 
- * @author ICT711 Group Project Team
- * @version 1.0
+
  */
 public final class Constants {
     

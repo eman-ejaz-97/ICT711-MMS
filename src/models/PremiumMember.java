@@ -11,11 +11,11 @@ import constants.Constants;
  * - High performance bonus for ratings 8 and above
  * 
  * Demonstrates inheritance and polymorphism from Member base class.
- * 
- * @author ICT711 Group Project Team
- * @version 1.0
+ *
+
  */
-public class PremiumMember extends Member {
+public class PremiumMember extends Member { // INHERITANCE: Extends Member base class
+    // ENCAPSULATION: Additional private fields specific to premium members
     private String trainerName;      // Assigned personal trainer
     private int sessionsPerMonth;    // Number of training sessions per month
     
@@ -33,7 +33,7 @@ public class PremiumMember extends Member {
      */
     public PremiumMember(String memberId, String firstName, String lastName,
                         String email, String phone, String trainerName, int sessionsPerMonth) {
-        super(memberId, firstName, lastName, email, phone, Constants.PREMIUM_BASE_FEE);
+        super(memberId, firstName, lastName, email, phone, Constants.PREMIUM_BASE_FEE); // INHERITANCE: Call parent constructor
         this.trainerName = trainerName;
         this.sessionsPerMonth = sessionsPerMonth;
     }
@@ -49,20 +49,20 @@ public class PremiumMember extends Member {
      * 
      * @return calculated monthly fee
      */
-    @Override
+    @Override // POLYMORPHISM: Override abstract method from parent class
     public double calculateMonthlyFee() {
-        double fee = getBaseFee();
+        double fee = getBaseFee(); // INHERITANCE: Use method inherited from parent class
         
         // Add cost for personal training sessions
         fee += (sessionsPerMonth * Constants.SESSION_COST);
         
         // Apply goal achievement discount
-        if (isGoalAchieved()) {
+        if (isGoalAchieved()) { // INHERITANCE: Use method inherited from parent class
             fee = fee * (1 - Constants.PREMIUM_GOAL_ACHIEVEMENT_DISCOUNT);
         }
         
         // Apply high performance bonus
-        if (getPerformanceRating() >= Constants.HIGH_PERFORMANCE_THRESHOLD) {
+        if (getPerformanceRating() >= Constants.HIGH_PERFORMANCE_THRESHOLD) { // INHERITANCE: Use method inherited from parent class
             fee -= Constants.HIGH_PERFORMANCE_BONUS;
         }
         
@@ -74,13 +74,13 @@ public class PremiumMember extends Member {
      * 
      * @return "Premium Membership (Personal Trainer)"
      */
-    @Override
+    @Override // POLYMORPHISM: Override abstract method from parent class
     public String getMemberType() {
         return Constants.DISPLAY_PREMIUM_MEMBERSHIP;
     }
     
     /** @return assigned trainer's name */
-    public String getTrainerName() { return trainerName; }
+    public String getTrainerName() { return trainerName; } // ENCAPSULATION: Controlled access to private field
     
     /** @param trainerName new trainer name to assign */
     public void setTrainerName(String trainerName) { this.trainerName = trainerName; }
