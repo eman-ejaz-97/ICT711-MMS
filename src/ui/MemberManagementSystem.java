@@ -47,7 +47,19 @@ public class MemberManagementSystem {
             displayMenu();
             
             try {
-                int choice = Integer.parseInt(scanner.nextLine());
+                // Check if scanner has input available
+                if (!scanner.hasNextLine()) {
+                    System.out.println("No input available. Exiting...");
+                    break;
+                }
+                
+                String input = scanner.nextLine();
+                if (input == null || input.trim().isEmpty()) {
+                    System.out.println(Constants.MSG_INVALID_INPUT);
+                    continue;
+                }
+                
+                int choice = Integer.parseInt(input.trim());
                 
                 switch (choice) {
                     case 1: loadRecords(); break;
