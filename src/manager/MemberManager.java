@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import models.*;
 import constants.Constants;
+import algorithms.SearchingAlgorithms;
+import algorithms.SortingAlgorithms;
 
 /**
  * Central manager class for all member-related operations.
@@ -329,5 +331,218 @@ public class MemberManager {
         System.out.printf(Constants.STATS_GOAL_ACHIEVERS, goalAchievers);
         System.out.println();
         System.out.println(Constants.STATS_FOOTER);
+    }
+    
+    // ========== ENHANCED SEARCHING METHODS ==========
+    
+    /**
+     * Performs linear search to find member by ID.
+     * Demonstrates O(n) searching algorithm.
+     * 
+     * @param memberId Target member ID to search for
+     * @return Member object if found, null otherwise
+     */
+    public Member linearSearchById(String memberId) {
+        return SearchingAlgorithms.linearSearchById(members, memberId);
+    }
+    
+    /**
+     * Performs binary search to find member by ID.
+     * Requires sorted member list - sorts automatically if needed.
+     * Demonstrates O(log n) searching algorithm.
+     * 
+     * @param memberId Target member ID to search for
+     * @return Member object if found, null otherwise
+     */
+    public Member binarySearchById(String memberId) {
+        // Create sorted copy for binary search
+        List<Member> sortedMembers = new ArrayList<>(members);
+        sortedMembers.sort(Comparator.comparing(Member::getMemberId));
+        return SearchingAlgorithms.binarySearchById(sortedMembers, memberId);
+    }
+    
+    /**
+     * Performs hash-based search to find member by ID.
+     * Demonstrates O(1) average case searching algorithm.
+     * 
+     * @param memberId Target member ID to search for
+     * @return Member object if found, null otherwise
+     */
+    public Member hashSearchById(String memberId) {
+        return SearchingAlgorithms.hashSearchById(members, memberId);
+    }
+    
+    /**
+     * Performs fuzzy search by name (partial matching).
+     * Useful for finding members when exact name is not known.
+     * 
+     * @param nameSearch Partial name to search for
+     * @return List of members with names containing the search term
+     */
+    public List<Member> fuzzySearchByName(String nameSearch) {
+        return SearchingAlgorithms.fuzzySearchByName(members, nameSearch);
+    }
+    
+    /**
+     * Finds members with performance ratings in specified range.
+     * Useful for generating reports based on performance criteria.
+     * 
+     * @param minRating Minimum performance rating (inclusive)
+     * @param maxRating Maximum performance rating (inclusive)
+     * @return List of members within the performance range
+     */
+    public List<Member> findMembersByPerformanceRange(int minRating, int maxRating) {
+        return SearchingAlgorithms.rangeSearchByPerformance(members, minRating, maxRating);
+    }
+    
+    /**
+     * Performs multi-criteria search with multiple filters.
+     * Allows complex searches combining different member attributes.
+     * 
+     * @param memberType Type of membership (null to ignore)
+     * @param minRating Minimum performance rating (-1 to ignore)
+     * @param goalAchieved Goal achievement status (null to ignore)
+     * @return List of members matching all specified criteria
+     */
+    public List<Member> multiCriteriaSearch(String memberType, int minRating, Boolean goalAchieved) {
+        return SearchingAlgorithms.multiCriteriaSearch(members, memberType, minRating, goalAchieved);
+    }
+    
+    /**
+     * Compares different search algorithm performances.
+     * Educational method to demonstrate algorithm efficiency.
+     * 
+     * @param targetId Member ID to search for in comparison
+     */
+    public void compareSearchPerformance(String targetId) {
+        SearchingAlgorithms.compareSearchAlgorithms(members, targetId);
+    }
+    
+    // ========== ENHANCED SORTING METHODS ==========
+    
+    /**
+     * Sorts members by ID using bubble sort algorithm.
+     * Demonstrates O(n²) sorting algorithm - suitable for small datasets.
+     * 
+     * @return New list of members sorted by ID
+     */
+    public List<Member> bubbleSortById() {
+        return SortingAlgorithms.bubbleSortById(members);
+    }
+    
+    /**
+     * Sorts members by performance rating using selection sort algorithm.
+     * Demonstrates O(n²) sorting algorithm with minimal swaps.
+     * 
+     * @return New list of members sorted by performance (descending)
+     */
+    public List<Member> selectionSortByPerformance() {
+        return SortingAlgorithms.selectionSortByPerformance(members);
+    }
+    
+    /**
+     * Sorts members by name using insertion sort algorithm.
+     * Demonstrates O(n²) sorting algorithm - efficient for small/nearly sorted data.
+     * 
+     * @return New list of members sorted by full name
+     */
+    public List<Member> insertionSortByName() {
+        return SortingAlgorithms.insertionSortByName(members);
+    }
+    
+    /**
+     * Sorts members by monthly fee using merge sort algorithm.
+     * Demonstrates O(n log n) stable sorting algorithm.
+     * 
+     * @return New list of members sorted by monthly fee
+     */
+    public List<Member> mergeSortByFee() {
+        return SortingAlgorithms.mergeSortByFee(members);
+    }
+    
+    /**
+     * Sorts members by type using quick sort algorithm.
+     * Demonstrates O(n log n) average case sorting algorithm.
+     * 
+     * @return New list of members sorted by member type
+     */
+    public List<Member> quickSortByType() {
+        return SortingAlgorithms.quickSortByType(members);
+    }
+    
+    /**
+     * Sorts members by join date using heap sort algorithm.
+     * Demonstrates O(n log n) guaranteed performance sorting algorithm.
+     * 
+     * @return New list of members sorted by join date (newest first)
+     */
+    public List<Member> heapSortByJoinDate() {
+        return SortingAlgorithms.heapSortByJoinDate(members);
+    }
+    
+    /**
+     * Sorts members using custom criteria and Java's optimized TimSort.
+     * Demonstrates practical sorting with custom comparators.
+     * 
+     * @param sortBy Criteria to sort by ("id", "name", "performance", "fee", "type")
+     * @param ascending Whether to sort in ascending order
+     * @return New list of members sorted by specified criteria
+     */
+    public List<Member> customSort(String sortBy, boolean ascending) {
+        return SortingAlgorithms.customSort(members, sortBy, ascending);
+    }
+    
+    /**
+     * Compares different sorting algorithm performances.
+     * Educational method to demonstrate algorithm efficiency and complexity.
+     */
+    public void compareSortingPerformance() {
+        SortingAlgorithms.compareSortingAlgorithms(members);
+    }
+    
+    /**
+     * Demonstrates algorithm complexity analysis with current dataset.
+     * Provides educational insights into Big O notation practical implications.
+     */
+    public void analyzeAlgorithmComplexity() {
+        int n = members.size();
+        System.out.println("=== Algorithm Complexity Analysis ===");
+        System.out.println("Current dataset size (n): " + n);
+        System.out.println();
+        
+        System.out.println("Search Algorithm Time Complexities:");
+        System.out.println("- Linear Search: O(n) = " + n + " operations in worst case");
+        System.out.println("- Binary Search: O(log n) = " + (int)Math.ceil(Math.log(n)/Math.log(2)) + " operations in worst case");
+        System.out.println("- Hash Search: O(1) = 1 operation average case");
+        System.out.println();
+        
+        System.out.println("Sort Algorithm Time Complexities:");
+        System.out.println("- Bubble Sort: O(n²) = " + (n*n) + " operations in worst case");
+        System.out.println("- Selection Sort: O(n²) = " + (n*n) + " operations in all cases");
+        System.out.println("- Insertion Sort: O(n²) = " + (n*n) + " operations in worst case, O(n) = " + n + " in best case");
+        System.out.println("- Merge Sort: O(n log n) = " + (int)(n * Math.log(n)/Math.log(2)) + " operations in all cases");
+        System.out.println("- Quick Sort: O(n log n) = " + (int)(n * Math.log(n)/Math.log(2)) + " operations average case");
+        System.out.println("- Heap Sort: O(n log n) = " + (int)(n * Math.log(n)/Math.log(2)) + " operations in all cases");
+        System.out.println();
+        
+        System.out.println("Space Complexity Notes:");
+        System.out.println("- Linear/Binary/Hash Search: O(1) additional space");
+        System.out.println("- Bubble/Selection/Insertion/Heap Sort: O(1) additional space (in-place)");
+        System.out.println("- Merge Sort: O(n) additional space for merging");
+        System.out.println("- Quick Sort: O(log n) additional space for recursion stack");
+        System.out.println();
+        
+        System.out.println("Recommendations for current dataset size (" + n + "):");
+        if (n < 50) {
+            System.out.println("- Any algorithm suitable for small dataset");
+            System.out.println("- Insertion sort recommended for nearly sorted data");
+        } else if (n < 1000) {
+            System.out.println("- O(n log n) algorithms recommended (Merge, Quick, Heap)");
+            System.out.println("- Avoid O(n²) algorithms (Bubble, Selection) for better performance");
+        } else {
+            System.out.println("- Use O(n log n) algorithms only (Merge, Quick, Heap)");
+            System.out.println("- Hash search strongly recommended for frequent lookups");
+            System.out.println("- O(n²) algorithms will be very slow");
+        }
     }
 }

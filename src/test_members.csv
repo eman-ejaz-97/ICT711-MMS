@@ -1,0 +1,10 @@
+Type,ID,FirstName,LastName,Email,Phone,PerformanceRating,GoalAchieved,Extra1,Extra2
+Regular,R001,Alice,Johnson,updated@email.com,123-456-7890,8,true
+Regular,R002,Bob,Smith,bob.s@email.com,123-456-7891,3,false
+Regular,R003,Charlie,Brown,charlie.b@email.com,123-456-7892,7,true
+Premium,P001,Diana,Wilson,diana.w@email.com,123-456-7893,10,true,John Coach,8
+Premium,P002,Eve,Davis,eve.d@email.com,123-456-7894,2,false,Sarah Trainer,6
+Premium,P003,Frank,Miller,frank.m@email.com,123-456-7895,8,true,Mike Fitness,10
+Student,S001,Grace,Anderson,grace.a@email.com,123-456-7896,6,false,STU2024001,State University
+Student,S002,Henry,Taylor,henry.t@email.com,123-456-7897,9,true,STU2024002,Tech College
+Student,S003,Ivy,Thomas,ivy.t@email.com,123-456-7898,4,false,STU2024003,City University
